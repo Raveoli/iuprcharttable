@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet"ng-repear href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  </head>
+  <body ng-app="info" ng-controller="infoCtrl">
+      <div class="row" >
+          <div class="col-md-3">
+              <select id="base" class="geography-dropdown" ng-model="geo">
+                  <option ng-repeat="item in geoitems.geography">\{{item}}</option>
+              </select>
+              <br/>
+              <br/>
+              <br/>
+              <select id="compare" class="geography-dropdown" ng-model="geo1">
+                  <option ng-repeat="item in geoitems.geography">\{{item}}</option>
+              </select>
+          </div>
+          <div class="col-md-9">
+              <table class="table table bordered" ng-table="tableParams">
+                  <tr>
+                      <th>Geography</th>
+                      <th>Poverty</th>
+                  </tr>
+                  <tr>
+                      <th ng-repeat="item in yearList.year">\{{item}}</th>
+                  </tr>
+              </table>
+          </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+  <script src="/javascripts/secret.js"></script>
+  <script src="/javascripts/displayDetails.js"></script>
+</html>
