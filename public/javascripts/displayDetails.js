@@ -25,7 +25,7 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
                 year: ft.properties.year
             });
         });
-        function removeDuplicates(arr){
+        function removeDuplicates_geo(arr){
             var unique_arr=[];
             var distinct={};
             for(var i=0;i<arr.length;i++){
@@ -38,14 +38,29 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
 
             return unique_arr;
         }
+        function removeDuplicates(arr){
+            var unique_arr=[];
+            var distinct={};
+            for(var i=0;i<arr.length;i++){
+                if(distinct[arr[i]]==undefined)
+                {
+                    distinct[arr[i]]=0;
+                    unique_arr.push(arr[i]);
+                }
+            }
 
-        var resList=removeDuplicates(outputlist);
+            return unique_arr;
+        }
+
+        var resList=removeDuplicates_geo(outputlist);
         $scope.geoitems = {
             geography: resList
         };
         var yearArr_base=[];
+        var yearArr_comp=[];
         $('#base').on('change',function () {
             var value=$(this).val();
+            yearArr_base=[];
             //console.log(value);
             for(var i=0;i<outputlist.length;i++){
                 if(outputlist[i].geography==value){
@@ -164,14 +179,9 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
                 }
             }
             var year=removeDuplicates(yearArr_base);
-            for (var i = 0; i < year.length; i++) {
-                console.log(year.length+" "+year[i]);
-            }
-            for (var i = 0; i < yearArr_base.length; i++) {
-                console.log(yearArr_base[i]);
-            }
+
             $scope.yearList={
-                year:yearArr_base
+                year:year
             };
 
         });
