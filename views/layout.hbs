@@ -18,6 +18,9 @@
               <select id="compare" class="geography-dropdown" ng-model="geo1">
                   <option ng-repeat="item in geoitems.geography">\{{item}}</option>
               </select>
+              <br />
+              <br />
+              <input type="button" id="submitButton" name="submitButton" value="Submit" ng-click="displayYear()"/>
           </div>
           <div class="col-md-9">
               <table class="table table bordered" ng-table="tableParams">
@@ -28,6 +31,14 @@
                   <tr>
                       <th></th>
                       <th ng-repeat="item in yearList.year">\{{item}}</th>
+                  </tr>
+                  <tr>
+                      <td>\{{base}}</td>
+                      <td ng-repeat="item in povList.basepov">\{{item}}</td>
+                  </tr>
+                  <tr>
+                      <td>\{{cmp}}</td>
+                      <td ng-repeat="item in povList.cmppov">\{{item}}</td>
                   </tr>
               </table>
           </div>

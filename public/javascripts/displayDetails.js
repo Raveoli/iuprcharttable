@@ -9,7 +9,7 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
     $http.get('https://' + username + '.carto.com/api/v2/sql/?format=geojson&q=' + povertyquery + '&apikey=' + apikey).success(function(response){
         var outputlist = [];
         response.features.forEach(function (ft) {
-            //console.log(ft.properties);
+            console.log(ft.properties);
             outputlist.push({
                 basepop: ft.properties.basepop,
                 cartodb_id: ft.properties.cartodb_id,
@@ -57,17 +57,21 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
             geography: resList
         };
         var yearArr_base=[];
-        var yearArr_comp=[];
+        var base_povrate=[];
+        var cmp_povrate=[];
+        var baseValue,cmpValue;
         $('#base').on('change',function () {
-            var value=$(this).val();
+            baseValue=$(this).val();
             yearArr_base=[];
-            //console.log(value);
+            //console.log(baseValue);
             for(var i=0;i<outputlist.length;i++){
-                if(outputlist[i].geography==value){
+                if(outputlist[i].geography==baseValue){
                     yearArr_base.push(outputlist[i].year);
+                    base_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
-            switch(value){
+            //console.log(yearArr_base.length);
+            switch(baseValue){
                 case 'United States':break;
                 case 'Texas': break;
                 case 'Dallas County, Texas': break;
@@ -171,20 +175,32 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
             }
         });
         $('#compare').on('change',function () {
-            var value = $(this).val();
-            //console.log(value);
+            cmpValue = $(this).val();
+            //console.log(cmpValue);
             for (var i = 0; i < outputlist.length; i++) {
-                if (outputlist[i].geography == value) {
+                if (outputlist[i].geography == cmpValue) {
                     yearArr_base.push(outputlist[i].year);
+                    cmp_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
-            var year=removeDuplicates(yearArr_base);
 
+
+        });
+        $scope.displayYear=function () {
+            var year=removeDuplicates(yearArr_base);
             $scope.yearList={
                 year:year
             };
-
-        });
+            $scope.base=baseValue;
+            $scope.cmp=cmpValue;
+            for(var i=0;i<base_povrate.length;i++){
+                console.log(base_povrate[i]);
+            }
+            $scope.povList={
+                basepov:base_povrate,
+                cmppov:cmp_povrate
+            };
+        }
 
     });
 }]);
