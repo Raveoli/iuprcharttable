@@ -9,7 +9,7 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
     $http.get('https://' + username + '.carto.com/api/v2/sql/?format=geojson&q=' + povertyquery + '&apikey=' + apikey).success(function(response){
         var outputlist = [];
         response.features.forEach(function (ft) {
-            console.log(ft.properties);
+            //console.log(ft.properties);
             outputlist.push({
                 basepop: ft.properties.basepop,
                 cartodb_id: ft.properties.cartodb_id,
@@ -51,21 +51,40 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
 
             return unique_arr;
         }
+        function match(arr,arr1){
+            var result_arr=[];
+            var num=Math.min(arr.length,arr1.length);
+            for(var i=0;i<num;i++){
+                if(arr[i]==arr1[i])
+                {
+                    result_arr.push(arr[i]);
+                }
+            }
 
+            return result_arr;
+        }
+        function arrSplit(arr,num){
+            var res=[];
+            res=arr.slice(0,num);
+            return res;
+        }
         var resList=removeDuplicates_geo(outputlist);
         $scope.geoitems = {
             geography: resList
         };
         var yearArr_base=[];
+        var yearArr_cmp=[];
         var base_povrate=[];
         var cmp_povrate=[];
         var baseValue,cmpValue;
         $('#base').on('change',function () {
             baseValue=$(this).val();
             yearArr_base=[];
+            base_povrate=[];
             //console.log(baseValue);
             for(var i=0;i<outputlist.length;i++){
                 if(outputlist[i].geography==baseValue){
+                    //console.log("year"+outputlist[i].year+"base"+outputlist[i].pctcpoor2);
                     yearArr_base.push(outputlist[i].year);
                     base_povrate.push(outputlist[i].pctcpoor2);
                 }
@@ -176,10 +195,13 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
         });
         $('#compare').on('change',function () {
             cmpValue = $(this).val();
+            yearArr_cmp=[];
+            cmp_povrate=[];
             //console.log(cmpValue);
             for (var i = 0; i < outputlist.length; i++) {
                 if (outputlist[i].geography == cmpValue) {
-                    yearArr_base.push(outputlist[i].year);
+                    //console.log("year"+outputlist[i].year+"cmp"+outputlist[i].pctcpoor2);
+                    yearArr_cmp.push(outputlist[i].year);
                     cmp_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
@@ -187,17 +209,32 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
 
         });
         $scope.displayYear=function () {
-            var year=removeDuplicates(yearArr_base);
+            var year=match(yearArr_base,yearArr_cmp);
+            console.log("Year:");
+            for(var i=0;i<year.length;i++){
+                console.log(year[i]);
+            }
             $scope.yearList={
                 year:year
             };
             $scope.base=baseValue;
             $scope.cmp=cmpValue;
-            for(var i=0;i<base_povrate.length;i++){
-                console.log(base_povrate[i]);
-            }
+
+            var num=Math.min(base_povrate.length,cmp_povrate.length);
+            base_povrate=arrSplit(base_povrate,num);
+            cmp_povrate=arrSplit(cmp_povrate,num);
+            console.log("Base:");
+             for(var i=0;i<base_povrate.length;i++){
+             console.log(base_povrate[i]);
+             }
+             console.log("Cmpareo:");
+             for(var i=0;i<base_povrate.length;i++){
+             console.log(cmp_povrate[i]);
+             }
             $scope.povList={
-                basepov:base_povrate,
+                basepov:base_povrate
+            };
+            $scope.povList1= {
                 cmppov:cmp_povrate
             };
         }

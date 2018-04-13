@@ -34,11 +34,11 @@
                   </tr>
                   <tr>
                       <td>\{{base}}</td>
-                      <td ng-repeat="item in povList.basepov">\{{item}}</td>
+                      <td ng-repeat="item in povList.basepov track by $index">\{{item}}</td>
                   </tr>
-                  <tr>
+                  <tr ng-model="compare">
                       <td>\{{cmp}}</td>
-                      <td ng-repeat="item in povList.cmppov">\{{item}}</td>
+                      <td ng-repeat="item1 in povList1.cmppov track by $index">\{{item1}}</td>
                   </tr>
               </table>
           </div>
