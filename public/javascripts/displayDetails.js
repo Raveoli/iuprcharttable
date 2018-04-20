@@ -5,7 +5,7 @@
 
 var app=angular.module("info",[]);
 
-app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
+app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $filter){
     $http.get('https://' + username + '.carto.com/api/v2/sql/?format=geojson&q=' + povertyquery + '&apikey=' + apikey).success(function(response){
         var outputlist = [];
         response.features.forEach(function (ft) {
@@ -57,7 +57,7 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
             for(var i=0;i<num;i++){
                 if(arr[i]==arr1[i])
                 {
-                    result_arr.push(arr[i]);
+                    result_arr.push({year:arr[i],val:true});
                 }
             }
 
@@ -76,6 +76,7 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
         var yearArr_cmp=[];
         var base_povrate=[];
         var cmp_povrate=[];
+        var year=[];
         var baseValue,cmpValue;
         $('#base').on('change',function () {
             baseValue=$(this).val();
@@ -209,28 +210,27 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
 
         });
         $scope.displayYear=function () {
-            var year=match(yearArr_base,yearArr_cmp);
+            year=match(yearArr_base,yearArr_cmp);
             console.log("Year:");
             for(var i=0;i<year.length;i++){
                 console.log(year[i]);
             }
-            $scope.yearList={
-                year:year
-            };
+            $scope.yearList=year;
+            $scope.tableYear=year;
             $scope.base=baseValue;
             $scope.cmp=cmpValue;
 
             var num=Math.min(base_povrate.length,cmp_povrate.length);
             base_povrate=arrSplit(base_povrate,num);
             cmp_povrate=arrSplit(cmp_povrate,num);
-            console.log("Base:");
+           /*console.log("Base:");
              for(var i=0;i<base_povrate.length;i++){
              console.log(base_povrate[i]);
              }
              console.log("Cmpareo:");
              for(var i=0;i<base_povrate.length;i++){
              console.log(cmp_povrate[i]);
-             }
+             }*/
             $scope.povList={
                 basepov:base_povrate
             };
@@ -238,6 +238,25 @@ app.controller("infoCtrl", ['$scope','$http',function($scope, $http){
                 cmppov:cmp_povrate
             };
         }
+        $scope.doIfChecked=function(item){
+            //console.log(item);
+            //write logic to hide respective columns from table
+
+        }
+       $scope.$watch("yearList", function(n,o){
+           //identifies which checkbox is false
+           console.log("n:");
+           console.log(n);
+           console.log("o:");
+           console.log(o);
+            var falses=$filter("filter")(n,{
+                val:false
+            });
+           console.log(falses[0]);
+            console.log(falses.length);
+            //write logic to hide respective columns from table
+        },true);
+
 
     });
 }]);
