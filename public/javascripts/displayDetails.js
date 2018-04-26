@@ -243,6 +243,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
             //write logic to hide respective columns from table
 
         }
+
        $scope.$watch("yearList", function(n,o){
            //identifies which checkbox is false
            console.log("n:");
@@ -255,8 +256,18 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
            console.log(falses[0]);
             console.log(falses.length);
             //write logic to hide respective columns from table
+           toggleColummn();
         },true);
 
+        function toggleColummn(){
+            var checkYear=$scope.tYear;
+            var checkBase=$scope.povBase;
+            var checkCmp=$scope.povCmp;
+            console.log("Year"+checkYear);
+            console.log("Base"+checkBase);
+            console.log("Cmp"+checkCmp);
+            $scope.hideColumn=false;
+        }
 
     });
 }]);

@@ -23,9 +23,9 @@
               <input type="button" id="submitButton" class="btn btn-primary" name="submitButton" value="Submit" ng-click="displayYear()"/>
               <br />
               <br />
-              <div ng-repeat="item in yearList"  id="\{{'yearDiv'+$index}}">
-                  <input type="checkbox" ng-model="item.val" id="\{{'yearSelect'+$index}}" value="\{{item.year}}" checked="checked" ng-click="doIfChecked(item.year)"/>
-                  <label for="\{{'yearLabel'+$index}}">\{{item.year}}</label>
+              <div ng-repeat="yearCheck in yearList"  id="\{{'yearDiv'+$index}}">
+                  <input type="checkbox" ng-model="yearCheck.val" id="\{{'yearSelect'+$index}}" value="\{{yearCheck.year}}" checked="checked" ng-click="doIfChecked(yearCheck.year)"/>
+                  <label for="\{{'yearLabel'+$index}}">\{{yearCheck.year}}</label>
               </div>
           </div>
           <div class="col-md-9">
@@ -36,15 +36,15 @@
                   </tr>
                   <tr>
                       <th scope="col"></th>
-                      <th scope="col" ng-repeat="item in tableYear track by $index" id="\{{'year'+$index}}">\{{item.year}}</th>
+                      <th scope="col" ng-repeat="tYear in tableYear track by $index" id="\{{'year'+$index}}" ng-hide="hideColumn">\{{tYear.year}}</th>
                   </tr>
                   <tr>
                       <th scope="row">\{{base}}</th>
-                      <td id="\{{'base'+$index}}" ng-repeat="item in povList.basepov track by $index">\{{item}}</td>
+                      <td id="\{{'base'+$index}}" ng-repeat="povBase in povList.basepov track by $index" ng-hide="hideColumn">\{{povBase}}</td>
                   </tr>
                   <tr ng-model="compare">
                       <th scope="row">\{{cmp}}</th>
-                      <td id="\{{'cmp'+$index}}" ng-repeat="item1 in povList1.cmppov track by $index">\{{item1}}</td>
+                      <td id="\{{'cmp'+$index}}" ng-repeat="povCmp in povList1.cmppov track by $index" ng-hide="hideColumn">\{{povCmp}}</td>
                   </tr>
               </table>
           </div>
