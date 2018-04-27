@@ -23,8 +23,8 @@
               <input type="button" id="submitButton" class="btn btn-primary" name="submitButton" value="Submit" ng-click="displayYear()"/>
               <br />
               <br />
-              <div ng-repeat="item in yearList"  id="\{{'yearDiv'+$index}}">
-                  <input type="checkbox" ng-model="item.val" id="\{{'yearSelect'+$index}}" value="\{{item.year}}" checked="checked" ng-click="doIfChecked(item.year)"/>
+              <div ng-repeat="item in PovRate.povrate"  id="\{{'yearDiv'+$index}}">
+                  <input type="checkbox" ng-model="item.val" id="\{{'yearSelect'+$index}}" value="\{{item.year}}" checked="checked"/>
                   <label for="\{{'yearLabel'+$index}}">\{{item.year}}</label>
               </div>
           </div>
@@ -36,15 +36,15 @@
                   </tr>
                   <tr>
                       <th scope="col"></th>
-                      <th scope="col" ng-repeat="item in tableYear track by $index" id="\{{'year'+$index}}">\{{item.year}}</th>
+                      <th scope="col"  ng-repeat="item in PovRate.povrate track by $index" ng-show="item.val" id="\{{'year'+$index}}">\{{item.year}}</th>
                   </tr>
                   <tr>
                       <th scope="row">\{{base}}</th>
-                      <td id="\{{'base'+$index}}" ng-repeat="item in povList.basepov track by $index">\{{item}}</td>
+                      <td id="\{{'base'+$index}}" ng-repeat="item in PovRate.povrate track by $index" ng-show="item.val">\{{item.basepov}}</td>
                   </tr>
                   <tr ng-model="compare">
                       <th scope="row">\{{cmp}}</th>
-                      <td id="\{{'cmp'+$index}}" ng-repeat="item1 in povList1.cmppov track by $index">\{{item1}}</td>
+                      <td id="\{{'cmp'+$index}}" ng-repeat="item1 in PovRate.povrate track by $index" ng-show="item1.val">\{{item1.cmppov}}</td>
                   </tr>
               </table>
           </div>
