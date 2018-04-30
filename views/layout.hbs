@@ -50,6 +50,8 @@
                   <tr ng-model="compare">
                       <th scope="row">\{{cmp}}</th>
                       <td id="\{{'cmp'+$index}}" ng-repeat="item1 in povRate.povrate track by $index" ng-show="item1.val">\{{item1.cmppov}}%</td>
+                      <!--<td id="\{{'cmp'+$index}}" ng-repeat="item1 in povRate.povrate track by $index" ng-show="item1.val">\{{item1.cmppov}}%</td>
+                      <td id="\{{'cmp'+$index}}" ng-repeat="item1 in povRate.povrate track by $index" ng-show="item1.val">\{{item1.cmppov}}%</td>-->
                   </tr>
               </table>
               <div id="curve_chart" style="width: 900px; height: 500px"></div>

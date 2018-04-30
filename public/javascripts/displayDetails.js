@@ -118,6 +118,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                 //console.log(year[i]);
                 year[i].basepov=base_povrate1[i];
                 year[i].cmppov=cmp_povrate1[i];
+                year[i].ratio=cmp_povrate1[i]/base_povrate1[i];
             }
             $scope.povRate={
                 povrate:year
@@ -131,7 +132,8 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
             function drawChart() {
                 var dataArray=[];
                 for(var i=0;i<year.length;i++){
-                    dataArray.push([year[i].year,year[i].basepov,year[i].cmppov]);
+                    if(year[i].val==true)
+                        dataArray.push([year[i].year,year[i].basepov,year[i].cmppov]);
                 }
                 var data= new google.visualization.DataTable();
                 data.addColumn('number','Year');
@@ -157,6 +159,50 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
             }
         }
 
+
+        $scope.$watch("povRate.povrate", function(n,o){
+            //identifies which checkbox is false
+            /*console.log("n:");
+            console.log(n);
+            console.log("o:");
+            console.log(o);*/
+            var falses=$filter("filter")(n,{
+                val:false
+            });
+            /*console.log(falses[0]);
+            console.log(falses.length);*/
+            //write logic to hide respective years based on checkbox selection from chart
+            google.charts.load('current', {'packages':['line']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+                var dataArray=[];
+                for(var i=0;i<year.length;i++){
+                    if(n[i].val==true)
+                        dataArray.push([n[i].year,n[i].basepov,n[i].cmppov]);
+                }
+                var data= new google.visualization.DataTable();
+                data.addColumn('number','Year');
+                data.addColumn('number',baseValue);
+                data.addColumn('number',cmpValue);
+
+                data.addRows(dataArray);
+                var options = {
+                    chart: {
+                        title: 'Poverty Rate of two countries'
+                    },
+                    hAxis: {format:'####'},
+                    vAxis: {format:'0.0'}
+                };
+                var formatter1 = new google.visualization.NumberFormat({pattern:'####'});
+                formatter1.format(data, 0);
+                var formatter2 = new google.visualization.NumberFormat({pattern:'0.0'});
+                formatter2.format(data, 1);
+
+                var chart =new google.charts.Line(document.getElementById('curve_chart'));
+
+                chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+        },true);
        /*$scope.$watch("yearList", function(n,o){
            //identifies which checkbox is false
            console.log("n:");
