@@ -115,10 +115,11 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
             var cmp_povrate1=arrSplit(cmp_povrate,num);
             //console.log("Year:");
             for(var i=0;i<year.length;i++){
-                //console.log(year[i]);
+               // console.log(year[i]);
                 year[i].basepov=base_povrate1[i];
                 year[i].cmppov=cmp_povrate1[i];
-                year[i].ratio=cmp_povrate1[i]/base_povrate1[i];
+                year[i].ratio=parseFloat(cmp_povrate1[i]/base_povrate1[i]).toFixed(2);
+                //console.log(year[i]);
             }
             $scope.povRate={
                 povrate:year
