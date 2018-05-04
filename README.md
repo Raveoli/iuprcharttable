@@ -2,6 +2,8 @@
 
 An application that compares poverty rates between two locations. Link: https://iuprchart.herokuapp.com/
 
+This is a part of my work as a Research Assistant in Institute for Urban Policy Research.
+
 ### Technologies used:
 1. Angularjs
 2. Nodejs
