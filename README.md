@@ -1,6 +1,6 @@
 # IUPR chart application
 
-An application that compares poverty rates between two countries. Link: https://iuprchart.herokuapp.com/
+An application that compares poverty rates between two locations. Link: https://iuprchart.herokuapp.com/
 
 ### Technologies used:
 1. Angularjs
