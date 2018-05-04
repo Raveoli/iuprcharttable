@@ -9,3 +9,4 @@ An application that compares poverty rates between two countries. Link: https://
 4. JQuery
 5. Bootstrap
 6. Google Visualization API for building charts
+7. CartoDB API to access data
