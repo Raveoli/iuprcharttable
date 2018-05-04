@@ -9,7 +9,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
     $http.get('https://' + username + '.carto.com/api/v2/sql/?format=geojson&q=' + povertyquery + '&apikey=' + apikey).success(function(response){
         var outputlist = [];
         response.features.forEach(function (ft) {
-            //console.log(ft.properties);
+           // console.log(ft.properties);
             outputlist.push({
                 basepop: ft.properties.basepop,
                 cartodb_id: ft.properties.cartodb_id,
@@ -90,6 +90,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                     base_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
+            yearArr_base.sort(function(a, b){return b-a});
             //console.log(yearArr_base.length);
 
         });
@@ -105,7 +106,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                     cmp_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
-
+            yearArr_cmp.sort(function(a, b){return b-a});
 
         });
         $scope.displayYear=function () {
@@ -127,6 +128,8 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
 
             $scope.base=baseValue;
             $scope.cmp=cmpValue;
+            $scope.rat="Ratio between countries";
+
 
             google.charts.load('current', {'packages':['line']});
             google.charts.setOnLoadCallback(drawChart);

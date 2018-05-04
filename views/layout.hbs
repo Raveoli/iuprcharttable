@@ -52,7 +52,7 @@
                       <td id="\{{'cmp'+$index}}" ng-repeat="item1 in povRate.povrate track by $index" ng-show="item1.val">\{{item1.cmppov}}%</td>
                   </tr>
                   <tr ng-model="ratio">
-                      <th scope="row">Ratio between countries</th>
+                      <th scope="row">\{{rat}}</th>
                       <td id="\{{'rat'+$index}}" ng-repeat="item2 in povRate.povrate track by $index" ng-show="item2.val">\{{item2.ratio}}</td>
 
                   </tr>
