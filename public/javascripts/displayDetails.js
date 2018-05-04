@@ -78,11 +78,15 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
         var cmp_povrate=[];
         var year=[];
         var baseValue,cmpValue;
+
         $('#base').on('change',function () {
             baseValue=$(this).val();
             yearArr_base=[];
             base_povrate=[];
             //console.log(baseValue);
+            outputlist.sort(function(obj1,obj2){
+                return obj2.year-obj1.year;
+            });
             for(var i=0;i<outputlist.length;i++){
                 if(outputlist[i].geography==baseValue){
                     //console.log("year"+outputlist[i].year+"base"+outputlist[i].pctcpoor2);
@@ -90,15 +94,17 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                     base_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
-            yearArr_base.sort(function(a, b){return b-a});
-            //console.log(yearArr_base.length);
 
         });
+
         $('#compare').on('change',function () {
             cmpValue = $(this).val();
             yearArr_cmp=[];
             cmp_povrate=[];
             //console.log(cmpValue);
+            outputlist.sort(function(obj1,obj2){
+                return obj2.year-obj1.year;
+            });
             for (var i = 0; i < outputlist.length; i++) {
                 if (outputlist[i].geography == cmpValue) {
                     //console.log("year"+outputlist[i].year+"cmp"+outputlist[i].pctcpoor2);
@@ -106,7 +112,6 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                     cmp_povrate.push(outputlist[i].pctcpoor2);
                 }
             }
-            yearArr_cmp.sort(function(a, b){return b-a});
 
         });
         $scope.displayYear=function () {
@@ -207,20 +212,6 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                 chart.draw(data, google.charts.Line.convertOptions(options));
             }
         },true);
-       /*$scope.$watch("yearList", function(n,o){
-           //identifies which checkbox is false
-           console.log("n:");
-           console.log(n);
-           console.log("o:");
-           console.log(o);
-            var falses=$filter("filter")(n,{
-                val:false
-            });
-           console.log(falses[0]);
-            console.log(falses.length);
-            //write logic to hide respective columns from table
-        },true);*/
-
 
     });
 }]);
