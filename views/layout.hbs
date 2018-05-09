@@ -14,12 +14,14 @@
   <body ng-app="info" ng-controller="infoCtrl">
       <div class="row" >
           <div class="col-md-2">
+              <label>Reference Geography</label>
               <select id="base" class="form-control" ng-model="geo">
                   <option ng-repeat="item in geoitems.geography">\{{item}}</option>
               </select>
               <br/>
               <br/>
               <br/>
+              <label>Comparison Geography</label>
               <select id="compare" class="form-control" ng-model="geo1">
                   <option ng-repeat="item in geoitems.geography">\{{item}}</option>
               </select>

@@ -21,6 +21,8 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                 id2: ft.properties.id2,
                 pctcpoor: ft.properties.pctcpoor,
                 pctcpoor2: ft.properties.pctcpoor2,
+                pctpoor: ft.properties.pctpoor,
+                pctpoor2: ft.properties.pctpoor2,
                 povpop: ft.properties.povpop,
                 year: ft.properties.year
             });
@@ -91,7 +93,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                 if(outputlist[i].geography==baseValue){
                     //console.log("year"+outputlist[i].year+"base"+outputlist[i].pctcpoor2);
                     yearArr_base.push(outputlist[i].year);
-                    base_povrate.push(outputlist[i].pctcpoor2);
+                    base_povrate.push(outputlist[i].pctpoor2);
                 }
             }
 
@@ -109,7 +111,7 @@ app.controller("infoCtrl", ['$scope','$http','$filter',function($scope, $http, $
                 if (outputlist[i].geography == cmpValue) {
                     //console.log("year"+outputlist[i].year+"cmp"+outputlist[i].pctcpoor2);
                     yearArr_cmp.push(outputlist[i].year);
-                    cmp_povrate.push(outputlist[i].pctcpoor2);
+                    cmp_povrate.push(outputlist[i].pctpoor2);
                 }
             }
 
